@@ -48,4 +48,6 @@ $routes->get('/guru/tugas/(:num)', 'Guru::tugas/$1');        // untuk tugas
 
 $routes->get('/guru/absensi', 'Guru::absensi');
 $routes->post('/guru/absensi/simpan', 'Guru::simpanAbsensi');
-
+$routes->get('guru/absensi', 'Guru::absensi');
+$routes->get('guru/absensi/(:num)/(:num)', 'Guru::absensi/$1/$2');
+$routes->post('guru/simpanAbsensiPopup', 'Guru::simpanAbsensiPopup');
