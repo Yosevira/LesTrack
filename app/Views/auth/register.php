@@ -40,13 +40,6 @@
         <label>Kelas</label>
         <input type="text" name="kelas" class="form-control">
     </div>
-    <div class="mb-3">
-        <label>Role</label>
-        <select name="role" class="form-control" required>
-            <option value="ortu">Orang Tua</option>
-            <option value="guru">Guru</option>
-        </select>
-    </div>
     <button type="submit" class="btn btn-success">Register</button>
 </form>
 
