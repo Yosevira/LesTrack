@@ -54,7 +54,7 @@
         
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
             <?php
-                // Logika untuk bulan sebelumnya
+              
                 $prev_month = $month - 1;
                 $prev_year = $year;
                 if ($prev_month == 0) {
@@ -62,7 +62,7 @@
                     $prev_year = $year - 1;
                 }
 
-                // Logika untuk bulan selanjutnya
+                
                 $next_month = $month + 1;
                 $next_year = $year;
                 if ($next_month == 13) {
@@ -99,7 +99,7 @@
                             <td class="text-start"><?= esc($s['nama_anak']) ?></td>
                             <?php for ($i = 1; $i <= $days_in_month; $i++): ?>
                                 <?php
-                                    // Tentukan status, tampilan, dan class untuk setiap sel
+                                    
                                     $status = $absensi[$s['id']][$i] ?? 'kosong';
                                     $tanggal_lengkap = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT) . '-' . str_pad($i, 2, '0', STR_PAD_LEFT);
                                     $display_char = '•';
