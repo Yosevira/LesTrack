@@ -42,7 +42,6 @@
             <label>Kelas</label>
             <input type="text" name="kelas" class="form-control">
         </div>
-        <button type="submit" class="btn btn-success">Register</button>
         <button type="submit" class="btn btn-success w-100">Register</button>
         <p class="mt-3 text-center">
             Sudah punya akun? <a href="/login">Login di sini</a>
