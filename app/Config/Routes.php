@@ -33,6 +33,10 @@ $routes->get('ortu/tugas/delete/(:num)', 'Ortu::hapusTugas/$1');
 $routes->get('ortu/tugas/edit/(:num)', 'Ortu::editTugas/$1');
 $routes->post('ortu/tugas/update/(:num)', 'Ortu::updateTugas/$1');
 
+$routes->get('ortu/profil', 'Ortu::profil');
+$routes->get('ortu/profil/edit', 'Ortu::editProfil'); // Menampilkan form edit profil
+$routes->post('ortu/profil/update', 'Ortu::updateProfil');
+
 //
 $routes->get('buatpassword', 'Auth::buatPassword');
 
@@ -42,3 +46,4 @@ $routes->post('/guru/tugas/update', 'Guru::updateTugas'); // update status + buk
 
 $routes->get('/guru/absensi', 'Guru::absensi');
 $routes->post('/guru/absensi/simpan', 'Guru::simpanAbsensi');
+
