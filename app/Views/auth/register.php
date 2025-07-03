@@ -39,17 +39,14 @@
             <input type="text" name="no_telp" class="form-control">
         </div>
         <div class="mb-3">
-            <label>Role</label>
-            <select name="role" class="form-control" required>
-                <option value="ortu">Orang Tua</option>
-                <option value="guru">Guru</option>
-            </select>
+            <label>Kelas</label>
+            <input type="text" name="kelas" class="form-control">
         </div>
+        <button type="submit" class="btn btn-success">Register</button>
         <button type="submit" class="btn btn-success w-100">Register</button>
         <p class="mt-3 text-center">
             Sudah punya akun? <a href="/login">Login di sini</a>
         </p>
     </form>
 </div>
-
 <?= view('layout/footer') ?>

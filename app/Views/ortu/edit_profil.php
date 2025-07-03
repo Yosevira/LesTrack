@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-warning text-white">
+                <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Edit Profil</h4>
                 </div>
                 <div class="card-body">
@@ -56,7 +56,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                        <a href="<?= base_url('ortu/profil') ?>" class="btn btn-secondary">Batal</a>
+                        <a href="<?= base_url('ortu/profil') ?>" class="btn btn-primary">Batal</a>
                     </form>
                 </div>
             </div>
