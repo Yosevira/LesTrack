@@ -28,11 +28,13 @@ class Ortu extends BaseController
         $userId = session('user_id');
         $jadwal = $jadwalModel->where('user_id', $userId)->findAll();
         $tugas = $tugasModel->where('user_id', $userId)->findAll();
-
         $tugasMapel = [];
         foreach ($tugas as $t) {
-            $tugasMapel[strtolower($t['mapel'])] = true;
+            if ($t['status'] !== 'selesai') {
+                $tugasMapel[strtolower($t['mapel'])] = true;
+            }
         }
+
 
         return view('ortu/jadwal', [
             'jadwal' => $jadwal,
@@ -43,26 +45,36 @@ class Ortu extends BaseController
     public function tambahJadwal()
     {
         $jadwalModel = new JadwalModel();
-
         $userId = session('user_id');
+
+        // Validasi input
+        if (!$this->validate([
+            'hari' => 'required',
+            'mapel' => 'required|min_length[2]',
+        ])) {
+            return redirect()->back()->withInput()->with('error', 'Hari dan Mapel wajib diisi dan minimal 2 karakter.');
+        }
         $hari = $this->request->getPost('hari');
-        $mapel = strtolower(trim($this->request->getPost('mapel'))); // lowercase utk validasi
+        $mapelInput = trim($this->request->getPost('mapel'));
+        $mapelKey = strtolower($mapelInput);
 
         // Cek duplikat mapel di hari yang sama
         $existing = $jadwalModel->where([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapel
-        ])->first();
+            'mapel' => $mapelInput,
+       ])->findAll();
 
-        if ($existing) {
-            return redirect()->back()->with('error', "Mapel '$mapel' sudah ada pada hari $hari.");
+        // Periksa apakah ada mapel yang sama (case-insensitive)
+        foreach ($existing as $item) {
+            if (strtolower($item['mapel']) == $mapelKey) {
+                return redirect()->back()->with('error', "Mapel '$mapelInput' sudah ada pada hari $hari.");
+            }
         }
-
-        $jadwalModel->save([
+            $jadwalModel->save([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapel
+            'mapel' => $mapelInput
         ]);
 
         return redirect()->to('/ortu/jadwal');

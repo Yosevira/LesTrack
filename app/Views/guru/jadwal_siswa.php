@@ -1,6 +1,6 @@
 <?= view('layout/header') ?>
 
-<h4 class="mb-4">📅 Jadwal Harian Anak</h4>
+<h4 class="mb-4">📅 Jadwal Harian <?= esc($siswa['nama_anak']) ?></h4>
 
 <?php if(session('error')): ?>
 <div class="alert alert-danger"><?= session('error') ?></div>
@@ -14,7 +14,6 @@
         <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <span><?= $hari ?></span>
-                <a href="/ortu/jadwal/edit/<?= $hari ?>" class="btn btn-sm btn-light">✏</a>
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
@@ -27,8 +26,6 @@
                             <?php if (isset($tugasMapel[$mapelKey])): ?>
                             <a href="/ortu/tugas" class="badge bg-warning text-dark text-decoration-none">Tugas</a>
                             <?php endif ?>
-                            <a href="/ortu/jadwal/delete/<?= $j['id'] ?>" class="btn btn-sm btn-outline-danger ms-2"
-                                onclick="return confirm('Hapus mapel ini?')">🗑</a>
                         </div>
                     </li>
                     <?php endif ?>

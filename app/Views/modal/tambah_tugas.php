@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Nama Mapel</label>
-                    <input type="text" name="mapel" class="form-control" placeholder="Contoh: Matematika" required>
+                    <input type="text" name="mapel" class="form-control" placeholder="Nama mapel tugas" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Deadline</label>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Keterangan</label>
-                    <input type="text" name="keterangan" class="form-control" placeholder="Contoh: Bab 2" required>
+                    <input type="text" name="keterangan" class="form-control" placeholder="Infromasi tugas" required>
                 </div>
             </div>
             <div class="modal-footer">

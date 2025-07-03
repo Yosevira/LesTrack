@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="mb-0">Daftar Tugas Anak</h4>
     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahTugas">
-       ➕ Tambah Tugas
+        ➕ Tambah Tugas
     </button>
 </div>
 
@@ -48,7 +48,7 @@
                         <td>
                             <a href="/ortu/tugas/edit/<?= $t['id'] ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
                             <a href="/ortu/tugas/delete/<?= $t['id'] ?>" class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Yakin ingin menghapus tugas ini?')">Hapus</a>
+                                onclick="return confirm('Anda yakin menghapus tugas ini?')">Hapus</a>
                         </td>
                     </tr>
                     <?php endforeach ?>
