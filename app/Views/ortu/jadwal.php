@@ -6,7 +6,7 @@
 <?php endif ?>
 
 <!-- Tombol Tambah -->
-<button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
     ➕ Tambah Jadwal
 </button>
 <?= view('modal/tambah_jadwal') ?>

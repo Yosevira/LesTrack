@@ -42,8 +42,8 @@
                         </tbody>
                     </table>
                     <div class="mt-3">
-                        <a href="<?= base_url('ortu/dashboard') ?>" class="btn btn-secondary">Kembali ke Dashboard</a>
-                        <a href="<?= base_url('ortu/profil/edit') ?>" class="btn btn-warning">Edit Profil</a> </div>
+                        <a href="<?= base_url('ortu/dashboard') ?>" class="btn btn-primary">Kembali ke Dashboard</a>
+                        <a href="<?= base_url('ortu/profil/edit') ?>" class="btn btn-primary">Edit Profil</a> </div>
                 </div>
             </div>
         </div>

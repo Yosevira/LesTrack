@@ -37,6 +37,10 @@
         <input type="text" name="no_telp" class="form-control">
     </div>
     <div class="mb-3">
+        <label>Kelas</label>
+        <input type="text" name="kelas" class="form-control">
+    </div>
+    <div class="mb-3">
         <label>Role</label>
         <select name="role" class="form-control" required>
             <option value="ortu">Orang Tua</option>
