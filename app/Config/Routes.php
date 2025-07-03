@@ -39,6 +39,8 @@ $routes->get('buatpassword', 'Auth::buatPassword');
 $routes->get('/guru/siswa/(:num)', 'Guru::detailSiswa/$1');
 $routes->get('/guru/tugas/(:num)', 'Guru::tugas/$1'); // lihat tugas siswa
 $routes->post('/guru/tugas/update', 'Guru::updateTugas'); // update status + bukti
+$routes->get('/guru/siswa/(:num)', 'Guru::detailSiswa/$1');  // untuk jadwal
+$routes->get('/guru/tugas/(:num)', 'Guru::tugas/$1');        // untuk tugas
 
 $routes->get('/guru/absensi', 'Guru::absensi');
 $routes->post('/guru/absensi/simpan', 'Guru::simpanAbsensi');

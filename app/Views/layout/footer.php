@@ -1,8 +1,27 @@
-</div>
-<footer class="bg-light text-center mt-5 py-3">
-    <small>&copy; <?= date('Y') ?> LesTrack. All rights reserved.</small>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    </div> <!-- Tutup container -->
 
-</html>
+    <footer class="bg-white border-top text-center mt-5 py-3 shadow-sm">
+        <small class="text-muted">
+            &copy; <?= date('Y') ?> LesTrack. Dibuat dengan ❤️ untuk pendidikan anak.
+        </small>
+    </footer>
+
+    <!-- Validasi Form -->
+    <script>
+(() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+    </script>
+    </body>
+
+    </html>

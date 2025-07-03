@@ -17,7 +17,8 @@
             <td><?= esc($row['nama_anak']) ?></td>
             <td><?= esc($row['nama_ortu']) ?></td>
             <td>
-                <a href="/guru/siswa/<?= $row['id'] ?>" class="btn btn-info btn-sm">Lihat Jadwal & Tugas</a>
+                <a href="/guru/siswa/<?= $row['id'] ?>" class="btn btn-primary btn-sm mb-1">📅 Lihat Jadwal</a>
+                <a href="/guru/tugas/<?= $row['id'] ?>" class="btn btn-warning btn-sm">📋 Lihat Tugas</a>
             </td>
         </tr>
         <?php endforeach ?>

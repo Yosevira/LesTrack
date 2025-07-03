@@ -27,22 +27,23 @@ class Guru extends BaseController
     {
         if (session('role') != 'guru') return redirect()->to('/');
 
-        $userModel = new UserModel();
         $jadwalModel = new JadwalModel();
         $tugasModel = new TugasModel();
-
-        $siswa = $userModel->find($id);
-        if (!$siswa || $siswa['role'] != 'ortu') {
-            return redirect()->to('/guru/dashboard')->with('error', 'Data siswa tidak ditemukan');
-        }
+        $userModel = new UserModel();
 
         $jadwal = $jadwalModel->where('user_id', $id)->findAll();
         $tugas = $tugasModel->where('user_id', $id)->findAll();
+        $siswa = $userModel->find($id);
 
-        return view('guru/detail_siswa', [
-            'siswa' => $siswa,
+        $tugasMapel = [];
+        foreach ($tugas as $t) {
+            $tugasMapel[strtolower($t['mapel'])] = true;
+        }
+
+        return view('guru/jadwal_siswa', [
             'jadwal' => $jadwal,
-            'tugas' => $tugas
+            'tugasMapel' => $tugasMapel,
+            'siswa' => $siswa
         ]);
     }
 
@@ -64,19 +65,40 @@ class Guru extends BaseController
 
     public function updateTugas()
     {
-        $tugasModel = new TugasModel();
+        $tugasModel = new \App\Models\TugasModel();
         $id = $this->request->getPost('id');
 
         $data = [
             'status' => $this->request->getPost('status')
         ];
 
-        // upload file jika ada
+        // Validasi & simpan file (hanya gambar)
         $file = $this->request->getFile('file');
         if ($file && $file->isValid() && !$file->hasMoved()) {
-            $newName = $file->getRandomName();
-            $file->move('uploads/', $newName);
-            $data['file_bukti'] = $newName;
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+            if (in_array($file->getMimeType(), $allowedTypes)) {
+                $newName = $file->getRandomName();
+                $file->move('uploads/', $newName);
+                $data['file'] = $newName; // pakai 'file', sesuai database
+            } else {
+                return redirect()->back()->with('error', 'File harus berupa gambar (jpg/png/webp)');
+            }
+
+                    if ($file && $file->isValid() && !$file->hasMoved()) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+                if (!in_array($file->getMimeType(), $allowedTypes)) {
+                    return redirect()->back()->with('error', 'File harus berupa gambar');
+                }
+
+                if ($file->getSize() > 2 * 1024 * 1024) { // 2MB
+                    return redirect()->back()->with('error', 'Ukuran file maksimal 2MB');
+                }
+
+                $newName = $file->getRandomName();
+                $file->move('uploads/', $newName);
+                $data['file'] = $newName;
+            }
+
         }
 
         $tugasModel->update($id, $data);

@@ -1,15 +1,10 @@
 <?= view('layout/header') ?>
-<h3>Jadwal Harian Anak</h3>
+
+<h4 class="mb-4">📅 Jadwal Harian Anak</h4>
 
 <?php if(session('error')): ?>
 <div class="alert alert-danger"><?= session('error') ?></div>
 <?php endif ?>
-
-<!-- Tombol Tambah -->
-<button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
-    ➕ Tambah Jadwal
-</button>
-<?= view('modal/tambah_jadwal') ?>
 
 <!-- Tampilkan Jadwal -->
 <div class="row">
@@ -43,28 +38,6 @@
         </div>
     </div>
     <?php endforeach ?>
-</div>
-
-<!-- Tampilkan daftar mapel -->
-<ul class="list-group">
-    <?php foreach ($jadwal as $j): ?>
-    <?php if ($j['hari'] === $hari): ?>
-    <?php $mapelKey = strtolower($j['mapel']); ?>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <?= esc($j['mapel']) ?>
-        <?php if (isset($tugasMapel[$mapelKey])): ?>
-        <a href="/ortu/tugas" class="badge bg-warning text-dark text-decoration-none">Tugas</a>
-        <?php endif ?>
-    </li>
-    <?php endif ?>
-    <?php endforeach ?>
-</ul>
-
-<?= view('modal/edit_jadwal', ['jadwal' => $jadwal, 'hari' => $hari]) ?>
-</div>
-</div>
-</div>
-
 </div>
 
 <?= view('layout/footer') ?>
