@@ -36,7 +36,11 @@
                         </td>
                         <td>
                             <?php if (!empty($t['file'])): ?>
-                            <a href="/uploads/<?= esc($t['file']) ?>" target="_blank">Lihat</a>
+                            <a href="/uploads/<?= esc($t['file']) ?>" target="_blank">
+                                <img src="/uploads/<?= esc($t['file']) ?>" alt="Bukti Tugas" width="80"
+                                    class="img-thumbnail">
+                            </a>
+
                             <?php else: ?>
                             <span class="text-muted">-</span>
                             <?php endif ?>

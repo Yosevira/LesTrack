@@ -1,6 +1,6 @@
 <?= view('layout/header') ?>
 
-<h3>Daftar Tugas Anak: <?= esc($siswa['nama_anak']) ?></h3>
+<h3>Daftar Tugas <?= esc($siswa['nama_anak']) ?></h3>
 
 <?php if (session()->getFlashdata('success')): ?>
 <div class="alert alert-success"><?= session('success') ?></div>
@@ -36,7 +36,9 @@
 
                 <td>
                     <?php if (!empty($t['file'])): ?>
-                    <a href="/uploads/<?= esc($t['file']) ?>" target="_blank">📎 Bukti</a>
+                    <a href="/uploads/<?= esc($t['file']) ?>" target="_blank">
+                        <img src="/uploads/<?= esc($t['file']) ?>" alt="Bukti Tugas" width="80" class="img-thumbnail">
+                    </a>
                     <?php else: ?>
                     <input type="file" name="file" class="form-control form-control-sm">
                     <?php endif ?>
