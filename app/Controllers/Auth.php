@@ -31,7 +31,7 @@ class Auth extends Controller
         return view('auth/register');
     }
 
-    public function doRegister()
+   public function doRegister()
     {
         $validation = \Config\Services::validation();
         $data = $this->request->getPost();
@@ -41,7 +41,30 @@ class Auth extends Controller
             'password' => 'required|min_length[6]',
             'nama_anak' => 'required',
             'nama_ortu' => 'required',
-            'role' => 'required|in_list[ortu,guru]',
+            'no_telp' => 'required', // Ini yang ingin diubah pesannya
+            'kelas' => 'required',
+        ], [ // Tambahkan array ini untuk pesan kustom
+            'email' => [
+                'required' => 'Email wajib diisi.',
+                'valid_email' => 'Format email tidak valid.',
+                'is_unique' => 'Email sudah terdaftar.'
+            ],
+            'password' => [
+                'required' => 'Password wajib diisi.',
+                'min_length' => 'Password minimal 6 karakter.'
+            ],
+            'nama_anak' => [
+                'required' => 'Nama anak wajib diisi.'
+            ],
+            'nama_ortu' => [
+                'required' => 'Nama orang tua wajib diisi.'
+            ],
+            'no_telp' => [
+                'required' => 'Nomor telepon wajib diisi.' 
+            ],
+            'kelas' => [
+                'required' => 'Kelas wajib diisi.'
+            ]
         ])) {
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
@@ -53,7 +76,8 @@ class Auth extends Controller
             'nama_ortu' => $data['nama_ortu'],
             'alamat' => $data['alamat'],
             'no_telp' => $data['no_telp'],
-            'role' => $data['role']
+            'kelas' => $data['kelas'],
+            'role' => 'ortu'
         ]);
 
         return redirect()->to('/')->with('message', 'Registrasi berhasil, silakan login');

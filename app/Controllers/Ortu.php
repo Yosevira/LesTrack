@@ -73,11 +73,13 @@ class Ortu extends BaseController
         $userId = session('user_id');
         $jadwal = $jadwalModel->where('user_id', $userId)->findAll();
         $tugas = $tugasModel->where('user_id', $userId)->findAll();
-
         $tugasMapel = [];
         foreach ($tugas as $t) {
-            $tugasMapel[strtolower($t['mapel'])] = true;
+            if ($t['status'] !== 'selesai') {
+                $tugasMapel[strtolower($t['mapel'])] = true;
+            }
         }
+
 
         return view('ortu/jadwal', [
             'jadwal' => $jadwal,
@@ -88,8 +90,15 @@ class Ortu extends BaseController
     public function tambahJadwal()
     {
         $jadwalModel = new JadwalModel();
-
         $userId = session('user_id');
+
+        // Validasi input
+        if (!$this->validate([
+            'hari' => 'required',
+            'mapel' => 'required|min_length[2]',
+        ])) {
+            return redirect()->back()->withInput()->with('error', 'Hari dan Mapel wajib diisi dan minimal 2 karakter.');
+        }
         $hari = $this->request->getPost('hari');
         $mapel = strtolower(trim($this->request->getPost('mapel'))); 
 
@@ -97,14 +106,14 @@ class Ortu extends BaseController
         $existing = $jadwalModel->where([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapel
-        ])->first();
+            'mapel' => $mapel,
+       ])->first();
 
+        // Periksa apakah ada mapel yang sama (case-insensitive)
         if ($existing) {
             return redirect()->back()->with('error', "Mapel '$mapel' sudah ada pada hari $hari.");
         }
-
-        $jadwalModel->save([
+            $jadwalModel->save([
             'user_id' => $userId,
             'hari' => $hari,
             'mapel' => $mapel

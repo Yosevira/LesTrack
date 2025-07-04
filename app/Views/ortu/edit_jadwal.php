@@ -18,7 +18,8 @@
                 </td>
                 <td>
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
-                    <a href="/ortu/jadwal/delete/<?= $j['id'] ?>" class="btn btn-sm btn-danger">🗑</a>
+                    <a href="/ortu/jadwal/delete/<?= $j['id'] ?>" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Anda yakin menghapus mapel ini?')">Hapus</a>
                 </td>
             </form>
         </tr>
@@ -26,5 +27,5 @@
     </tbody>
 </table>
 
-<a href="/ortu/jadwal" class="btn btn-secondary">← Kembali ke Jadwal</a>
+<a href="<?= base_url('ortu/jadwal') ?>" class="btn btn-primary">Kembali ke Jadwal</a>
 <?= view('layout/footer') ?>

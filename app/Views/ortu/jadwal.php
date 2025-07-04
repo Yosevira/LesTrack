@@ -19,7 +19,7 @@
         <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <span><?= $hari ?></span>
-                <a href="/ortu/jadwal/edit/<?= $hari ?>" class="btn btn-sm btn-light">✏</a>
+                <a href="/ortu/jadwal/edit/<?= $hari ?>" class="btn btn-sm btn-light">Edit</a>
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
@@ -32,8 +32,8 @@
                             <?php if (isset($tugasMapel[$mapelKey])): ?>
                             <a href="/ortu/tugas" class="badge bg-warning text-dark text-decoration-none">Tugas</a>
                             <?php endif ?>
-                            <a href="/ortu/jadwal/delete/<?= $j['id'] ?>" class="btn btn-sm btn-outline-danger ms-2"
-                                onclick="return confirm('Hapus mapel ini?')">🗑</a>
+                            <a href="/ortu/jadwal/delete/<?= $j['id'] ?>" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Anda yakin menghapus mapel ini?')">Hapus</a>
                         </div>
                     </li>
                     <?php endif ?>
@@ -45,26 +45,6 @@
     <?php endforeach ?>
 </div>
 
-<!-- Tampilkan daftar mapel -->
-<ul class="list-group">
-    <?php foreach ($jadwal as $j): ?>
-    <?php if ($j['hari'] === $hari): ?>
-    <?php $mapelKey = strtolower($j['mapel']); ?>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <?= esc($j['mapel']) ?>
-        <?php if (isset($tugasMapel[$mapelKey])): ?>
-        <a href="/ortu/tugas" class="badge bg-warning text-dark text-decoration-none">Tugas</a>
-        <?php endif ?>
-    </li>
-    <?php endif ?>
-    <?php endforeach ?>
-</ul>
-
 <?= view('modal/edit_jadwal', ['jadwal' => $jadwal, 'hari' => $hari]) ?>
-</div>
-</div>
-</div>
-
-</div>
 
 <?= view('layout/footer') ?>
