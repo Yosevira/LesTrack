@@ -73,7 +73,7 @@
 
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
             <?php
-                // Logika untuk bulan sebelumnya
+              
                 $prev_month = $month - 1;
                 $prev_year = $year;
                 if ($prev_month == 0) {
@@ -81,7 +81,7 @@
                     $prev_year = $year - 1;
                 }
 
-                // Logika untuk bulan selanjutnya
+                
                 $next_month = $month + 1;
                 $next_year = $year;
                 if ($next_month == 13) {

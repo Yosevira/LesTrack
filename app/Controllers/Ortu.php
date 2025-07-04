@@ -1,22 +1,67 @@
 <?php
 
 namespace App\Controllers;
-
+use App\Models\AbsensiModel;
 use App\Models\JadwalModel;
 use App\Models\TugasModel;
-use App\Models\UserModel; // Pastikan ini sudah ada
+use App\Models\UserModel; 
 
 class Ortu extends BaseController
 {
     public function dashboard()
     {
-        // Pastikan user sudah login dan role ortu
+        // 1. Cek apakah pengguna adalah orang tua
         if (session('role') != 'ortu') {
             return redirect()->to('/');
         }
 
-        return view('ortu/dashboard');
+        $userId = session('user_id'); 
+        $tugasModel = new TugasModel();
+        $absensiModel = new AbsensiModel();
+
+        // 2. Ambil data untuk "Pemberitahuan Tugas"
+        
+        $tugas = $tugasModel->where('user_id', $userId)
+                             ->where('status !=', 'selesai') 
+                             ->orderBy('deadline', 'ASC')
+                             ->findAll();
+
+        // 3. Ambil data untuk "Status Kehadiran Hari Ini"
+        $today = date('Y-m-d');
+        $kehadiran_hari_ini = $absensiModel->where('user_id', $userId)
+                                           ->where('tanggal', $today)
+                                           ->first();
+
+        // 4. Ambil data untuk "Kehadiran Minggu Ini" (Senin - Jumat)
+        $day_of_week = date('N'); 
+        $start_of_week = date('Y-m-d', strtotime('-' . ($day_of_week - 1) . ' days'));
+        $end_of_week = date('Y-m-d', strtotime('+' . (5 - $day_of_week) . ' days'));
+
+        $kehadiran_mingguan_raw = $absensiModel->where('user_id', $userId)
+                                              ->where('tanggal >=', $start_of_week)
+                                              ->where('tanggal <=', $end_of_week)
+                                              ->findAll();
+        
+        
+        $kehadiran_minggu_ini = [];
+        foreach ($kehadiran_mingguan_raw as $absen) {
+            $hari = date('N', strtotime($absen['tanggal'])); 
+            $kehadiran_minggu_ini[$hari] = $absen['status'];
+        }
+
+        // 5. Kirim semua data ke view
+        $data = [
+            'tugas' => $tugas,
+            'kehadiran_hari_ini' => $kehadiran_hari_ini,
+            'kehadiran_minggu_ini' => $kehadiran_minggu_ini,
+        ];
+
+        
+        return view('ortu/dashboard', $data);
     }
+
+    
+
 
     public function jadwal()
     {
@@ -55,26 +100,23 @@ class Ortu extends BaseController
             return redirect()->back()->withInput()->with('error', 'Hari dan Mapel wajib diisi dan minimal 2 karakter.');
         }
         $hari = $this->request->getPost('hari');
-        $mapelInput = trim($this->request->getPost('mapel'));
-        $mapelKey = strtolower($mapelInput);
+        $mapel = strtolower(trim($this->request->getPost('mapel'))); 
 
-        // Cek duplikat mapel di hari yang sama
+        
         $existing = $jadwalModel->where([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapelInput,
-       ])->findAll();
+            'mapel' => $mapel,
+       ])->first();
 
         // Periksa apakah ada mapel yang sama (case-insensitive)
-        foreach ($existing as $item) {
-            if (strtolower($item['mapel']) == $mapelKey) {
-                return redirect()->back()->with('error', "Mapel '$mapelInput' sudah ada pada hari $hari.");
-            }
+        if ($existing) {
+            return redirect()->back()->with('error', "Mapel '$mapel' sudah ada pada hari $hari.");
         }
             $jadwalModel->save([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapelInput
+            'mapel' => $mapel
         ]);
 
         return redirect()->to('/ortu/jadwal');
@@ -159,9 +201,9 @@ class Ortu extends BaseController
     public function updateTugas($id)
     {
         $tugasModel = new TugasModel();
-        // Pastikan Anda mendapatkan data tugas yang akan diupdate terlebih dahulu
+        
         $tugas = $tugasModel->find($id); 
-        $filename = $tugas['file'] ?? null; // Jika ada, ambil nama filenya
+        $filename = $tugas['file'] ?? null; 
 
         $data = [
             'mapel' => $this->request->getPost('mapel'),
@@ -176,7 +218,7 @@ class Ortu extends BaseController
 
     public function profil()
     {
-        // Pastikan user sudah login dan role ortu
+        
         if (session('role') != 'ortu') {
             return redirect()->to('/');
         }
@@ -192,9 +234,9 @@ class Ortu extends BaseController
         return view('ortu/profil', ['user' => $userData]);
     }
 
-    public function editProfil() // Fungsi baru untuk menampilkan form edit
+    public function editProfil() 
     {
-        // Pastikan user sudah login dan role ortu
+        
         if (session('role') != 'ortu') {
             return redirect()->to('/');
         }
@@ -207,13 +249,13 @@ class Ortu extends BaseController
             return redirect()->to('/ortu/dashboard')->with('error', 'Data profil tidak ditemukan.');
         }
 
-        // Tampilkan form edit profil dengan data yang ada
+        
         return view('ortu/edit_profil', ['user' => $userData]);
     }
 
-    public function updateProfil() // Fungsi baru untuk memproses update data
+    public function updateProfil() 
     {
-        // Pastikan user sudah login dan role ortu
+        
         if (session('role') != 'ortu') {
             return redirect()->to('/');
         }
@@ -221,15 +263,15 @@ class Ortu extends BaseController
         $userModel = new UserModel();
         $userId = session('user_id');
 
-        // Validasi input
+        
         $rules = [
             'nama_ortu'       => 'required|min_length[3]|max_length[100]',
             'nama_anak'       => 'required|min_length[3]|max_length[100]',
-            'kelas'           => 'permit_empty|max_length[50]', // Mengizinkan kosong
+            'kelas'           => 'permit_empty|max_length[50]', 
             'alamat'          => 'permit_empty|max_length[255]',
             'no_telp'         => 'permit_empty|min_length[10]|max_length[20]|numeric',
-            'password'        => 'permit_empty|min_length[8]', // Minimal 8 karakter jika diisi
-            'retype_password' => 'matches[password]', // Harus sama dengan field password
+            'password'        => 'permit_empty|min_length[8]', 
+            'retype_password' => 'matches[password]', 
         ];
 
         if (!$this->validate($rules)) {
@@ -244,10 +286,10 @@ class Ortu extends BaseController
             'no_telp'   => $this->request->getPost('no_telp'),
         ];
 
-        // Hanya update password jika ada input password baru dan tidak kosong
+        
         $newPassword = $this->request->getPost('password');
         if (!empty($newPassword)) {
-            // Hash password baru sebelum disimpan
+            
             $data['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
         }
 
