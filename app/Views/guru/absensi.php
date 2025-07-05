@@ -1,57 +1,76 @@
 <?= view('layout/header') ?>
 
 <style>
-    .absensi-cell {
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-    .absensi-cell:hover {
-        background-color: #f0f0f0;
-    }
-    .status-hadir { color: #198754; /* success */ }
-    .status-sakit { color: #ffc107; /* warning */ }
-    .status-alpa { color: #dc3545; /* danger */ }
-    .status-izin { color: #0d6efd; /* primary */ }
-    .status-kosong { color: #adb5bd; /* secondary */ }
+.absensi-cell {
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.absensi-cell:hover {
+    background-color: #f0f0f0;
+}
+
+.status-hadir {
+    color: #198754;
+    /* success */
+}
+
+.status-sakit {
+    color: #ffc107;
+    /* warning */
+}
+
+.status-alpa {
+    color: #dc3545;
+    /* danger */
+}
+
+.status-izin {
+    color: #0d6efd;
+    /* primary */
+}
+
+.status-kosong {
+    color: #adb5bd;
+    /* secondary */
+}
 </style>
 
 <div class="container-fluid">
+    <h3 class="mb-3">Daftar Hadir Les</h3>
     <div class="card p-3 mb-4 text-center shadow-sm">
-        <h2 class="mb-1">Sistem Absensi Les</h2>
-        <p class="text-muted mb-0">Kelola kehadiran murid dengan mudah</p>
+        <h4 class="mb-3">Ringkasan Hari Ini</h4>
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white p-3" style="background-color: #e6f7d5;">
+                    <h3 class="text-success"><?= esc($hadir_hari_ini) ?></h3>
+                    <p class="text-success mb-0">Hadir</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-dark p-3" style="background-color: #fff9c4;">
+                    <h3 class="text-warning"><?= esc($sakit_hari_ini) ?></h3>
+                    <p class="text-warning mb-0">Sakit</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white p-3" style="background-color: #ffcdd2;">
+                    <h3 class="text-danger"><?= esc($alpa_hari_ini) ?></h3>
+                    <p class="text-danger mb-0">Alpa</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card text-white bg-primary p-3">
+                    <h3><?= esc($total_murid) ?></h3>
+                    <p class="mb-0">Total Murid</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h4 class="mb-3">Ringkasan Hari Ini</h4>
-    <div class="row mb-4">
-        <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card text-white p-3" style="background-color: #e6f7d5;">
-                <h3 class="text-success"><?= esc($hadir_hari_ini) ?></h3>
-                <p class="text-success mb-0">Hadir</p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-3">
-             <div class="card text-dark p-3" style="background-color: #fff9c4;">
-                <h3 class="text-warning"><?= esc($sakit_hari_ini) ?></h3>
-                <p class="text-warning mb-0">Sakit</p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-3">
-             <div class="card text-white p-3" style="background-color: #ffcdd2;">
-                <h3 class="text-danger"><?= esc($alpa_hari_ini) ?></h3>
-                <p class="text-danger mb-0">Alpa</p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-3">
-             <div class="card text-white bg-primary p-3">
-                <h3><?= esc($total_murid) ?></h3>
-                <p class="mb-0">Total Murid</p>
-            </div>
-        </div>
-    </div>
-    
     <div class="card p-3 shadow-sm">
-        
+
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
             <?php
               
@@ -70,11 +89,13 @@
                     $next_year = $year + 1;
                 }
             ?>
-            <a href="<?= site_url('guru/absensi/' . $prev_year . '/' . $prev_month) ?>" class="btn btn-outline-primary">&leftarrow; Bulan Sebelumnya</a>
+            <a href="<?= site_url('guru/absensi/' . $prev_year . '/' . $prev_month) ?>"
+                class="btn btn-outline-primary">&leftarrow; Bulan Sebelumnya</a>
             <div class="mx-auto">
                 <h4 class="mb-0"><?= esc($nama_bulan) ?> <?= esc($year) ?></h4>
             </div>
-            <a href="<?= site_url('guru/absensi/' . $next_year . '/' . $next_month) ?>" class="btn btn-outline-primary">Bulan Selanjutnya &rightarrow;</a>
+            <a href="<?= site_url('guru/absensi/' . $next_year . '/' . $next_month) ?>"
+                class="btn btn-outline-primary">Bulan Selanjutnya &rightarrow;</a>
             <span class="badge bg-light text-dark ms-md-3 fs-6">Total Pertemuan: <?= esc($total_pertemuan) ?></span>
         </div>
 
@@ -84,22 +105,22 @@
                     <tr>
                         <th class="text-start" style="width: 200px; vertical-align: middle;">NAMA MURID</th>
                         <?php for ($i = 1; $i <= $days_in_month; $i++): ?>
-                            <th><?= $i ?></th>
+                        <th><?= $i ?></th>
                         <?php endfor; ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($siswa)): ?>
-                        <tr>
-                            <td colspan="<?= $days_in_month + 1 ?>" class="text-center">Belum ada data siswa.</td>
-                        </tr>
+                    <tr>
+                        <td colspan="<?= $days_in_month + 1 ?>" class="text-center">Belum ada data siswa.</td>
+                    </tr>
                     <?php else: ?>
-                        <?php foreach ($siswa as $s): ?>
-                        <tr>
-                            <td class="text-start"><?= esc($s['nama_anak']) ?></td>
-                            <?php for ($i = 1; $i <= $days_in_month; $i++): ?>
-                                <?php
-                                    
+                    <?php foreach ($siswa as $s): ?>
+                    <tr>
+                        <td class="text-start"><?= esc($s['nama_anak']) ?></td>
+                        <?php for ($i = 1; $i <= $days_in_month; $i++): ?>
+                        <?php
+                                    // Tentukan status, tampilan, dan class untuk setiap sel
                                     $status = $absensi[$s['id']][$i] ?? 'kosong';
                                     $tanggal_lengkap = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT) . '-' . str_pad($i, 2, '0', STR_PAD_LEFT);
                                     $display_char = '•';
@@ -124,18 +145,15 @@
                                             break;
                                     }
                                 ?>
-                                <td class="absensi-cell <?= $css_class ?>" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#absensiModal"
-                                    data-userid="<?= $s['id'] ?>" 
-                                    data-nama="<?= esc($s['nama_anak']) ?>"
-                                    data-tanggal="<?= $tanggal_lengkap ?>"
-                                    data-tanggal-display="<?= $i . ' ' . $nama_bulan . ' ' . $year ?>">
-                                    <?= $display_char ?>
-                                </td>
-                            <?php endfor; ?>
-                        </tr>
-                        <?php endforeach; ?>
+                        <td class="absensi-cell <?= $css_class ?>" data-bs-toggle="modal" data-bs-target="#absensiModal"
+                            data-userid="<?= $s['id'] ?>" data-nama="<?= esc($s['nama_anak']) ?>"
+                            data-tanggal="<?= $tanggal_lengkap ?>"
+                            data-tanggal-display="<?= $i . ' ' . $nama_bulan . ' ' . $year ?>">
+                            <?= $display_char ?>
+                        </td>
+                        <?php endfor; ?>
+                    </tr>
+                    <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -153,12 +171,12 @@
             <div class="modal-body">
                 <p class="mb-1"><strong>Tanggal:</strong> <span id="modalTanggalDisplay"></span></p>
                 <p class="mb-3"><strong>Murid:</strong> <span id="modalNamaMurid"></span></p>
-                
+
                 <form id="formAbsensi" action="<?= site_url('guru/simpanAbsensiPopup') ?>" method="post">
                     <?= csrf_field() ?>
                     <input type="hidden" name="user_id" id="modalUserId">
                     <input type="hidden" name="tanggal" id="modalTanggalValue">
-                    
+
                     <div class="d-grid gap-2">
                         <button type="submit" name="status" value="hadir" class="btn btn-success">✓ Hadir</button>
                         <button type="submit" name="status" value="sakit" class="btn btn-warning">Sakit</button>
@@ -175,10 +193,10 @@
 <?= view('layout/footer') ?>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const absensiModal = document.getElementById('absensiModal');
     if (absensiModal) {
-        absensiModal.addEventListener('show.bs.modal', function (event) {
+        absensiModal.addEventListener('show.bs.modal', function(event) {
             // Tombol/sel yang memicu modal
             const cell = event.relatedTarget;
 
@@ -193,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const modalTanggalDisplayEl = absensiModal.querySelector('#modalTanggalDisplay');
             const modalUserIdInput = absensiModal.querySelector('#modalUserId');
             const modalTanggalValueInput = absensiModal.querySelector('#modalTanggalValue');
-            
+
             modalNamaMuridEl.textContent = namaMurid;
             modalTanggalDisplayEl.textContent = tanggalDisplay;
             modalUserIdInput.value = userId;

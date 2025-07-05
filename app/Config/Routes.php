@@ -32,6 +32,8 @@ $routes->post('ortu/tugas/add', 'Ortu::tambahTugas');
 $routes->get('ortu/tugas/delete/(:num)', 'Ortu::hapusTugas/$1');
 $routes->get('ortu/tugas/edit/(:num)', 'Ortu::editTugas/$1');
 $routes->post('ortu/tugas/update/(:num)', 'Ortu::updateTugas/$1');
+$routes->get('/ortu/tugas/detail/(:num)', 'Ortu::detailTugas/$1');
+
 
 $routes->get('ortu/profil', 'Ortu::profil');
 $routes->get('ortu/profil/edit', 'Ortu::editProfil'); // Menampilkan form edit profil

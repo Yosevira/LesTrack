@@ -1,17 +1,23 @@
 <?= view('layout/header') ?>
+<?php if (session('errors')): ?>
+<script>
+var modal = new bootstrap.Modal(document.getElementById('modalTambahJadwal'));
+modal.show();
+</script>
+<?php endif ?>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Profil Orang Tua</h4>
+                    <h4 class="mb-0">Profil Anak</h4>
                 </div>
                 <div class="card-body">
                     <?php if (session()->getFlashdata('success')): ?>
-                        <div class="alert alert-success" role="alert">
-                            <?= session()->getFlashdata('success') ?>
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
                     <?php endif; ?>
                     <table class="table table-bordered">
                         <tbody>
@@ -43,7 +49,8 @@
                     </table>
                     <div class="mt-3">
                         <a href="<?= base_url('ortu/dashboard') ?>" class="btn btn-primary">Kembali ke Dashboard</a>
-                        <a href="<?= base_url('ortu/profil/edit') ?>" class="btn btn-primary">Edit Profil</a> </div>
+                        <a href="<?= base_url('ortu/profil/edit') ?>" class="btn btn-primary">Edit Profil</a>
+                    </div>
                 </div>
             </div>
         </div>
