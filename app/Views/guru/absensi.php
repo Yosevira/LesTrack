@@ -118,7 +118,7 @@
                                             $display_char = 'I';
                                             $css_class = 'status-izin';
                                             break;
-                                        case 'alfa':
+                                        case 'alpa':
                                             $display_char = 'A';
                                             $css_class = 'status-alpa';
                                             break;
@@ -162,7 +162,7 @@
                     <div class="d-grid gap-2">
                         <button type="submit" name="status" value="hadir" class="btn btn-success">✓ Hadir</button>
                         <button type="submit" name="status" value="sakit" class="btn btn-warning">Sakit</button>
-                        <button type="submit" name="status" value="alfa" class="btn btn-danger">X Alpa</button>
+                        <button type="submit" name="status" value="alpa" class="btn btn-danger">X Alpa</button>
                         <button type="submit" name="status" value="kosong" class="btn btn-secondary">Kosongkan</button>
                     </div>
                 </form>

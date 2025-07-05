@@ -151,7 +151,7 @@ class Guru extends BaseController
         $data['hadir_hari_ini'] = $absensiModel->where('tanggal', $today)->where('status', 'hadir')->countAllResults();
         $data['sakit_hari_ini'] = $absensiModel->where('tanggal', $today)->where('status', 'sakit')->countAllResults();
         
-        $data['alpa_hari_ini'] = $absensiModel->where('tanggal', $today)->whereIn('status', ['alfa', 'izin'])->countAllResults();
+        $data['alpa_hari_ini'] = $absensiModel->where('tanggal', $today)->whereIn('status', ['alpa', 'izin'])->countAllResults();
         $data['total_murid'] = count($siswa);
 
         // 6. Hitung "Total Pertemuan" dalam sebulan (berdasarkan hari unik yang ada absensinya)
