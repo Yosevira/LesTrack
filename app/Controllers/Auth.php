@@ -43,7 +43,7 @@ class Auth extends Controller
             'nama_ortu' => 'required',
             'no_telp' => 'required', // Ini yang ingin diubah pesannya
             'kelas' => 'required',
-        ], [ // Tambahkan array ini untuk pesan kustom
+        ], [ 
             'email' => [
                 'required' => 'Email wajib diisi.',
                 'valid_email' => 'Format email tidak valid.',

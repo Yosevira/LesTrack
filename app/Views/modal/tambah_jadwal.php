@@ -2,7 +2,8 @@
 $hariList = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
 ?>
 <!-- Modal Tambah Jadwal -->
-<div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade <?= session('errors') ? 'show d-block' : '' ?>" id="modalTambahJadwal" tabindex="-1"
+    aria-labelledby="modalLabel" aria-hidden="<?= session('errors') ? 'false' : 'true' ?>">
     <div class="modal-dialog modal-dialog-centered">
         <form method="post" action="/ortu/jadwal/add" class="modal-content" novalidate>
             <div class="modal-header bg-primary text-white">

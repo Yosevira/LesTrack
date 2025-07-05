@@ -1,4 +1,10 @@
 <?= view('layout/header') ?>
+<?php if (session('errors')): ?>
+<script>
+var modal = new bootstrap.Modal(document.getElementById('modalTambahJadwal'));
+modal.show();
+</script>
+<?php endif ?>
 
 <div class="container mt-5">
     <div class="row justify-content-center">

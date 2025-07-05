@@ -92,35 +92,55 @@ class Ortu extends BaseController
         $jadwalModel = new JadwalModel();
         $userId = session('user_id');
 
-        // Validasi input
-        if (!$this->validate([
-            'hari' => 'required',
-            'mapel' => 'required|min_length[2]',
-        ])) {
-            return redirect()->back()->withInput()->with('error', 'Hari dan Mapel wajib diisi dan minimal 2 karakter.');
-        }
-        $hari = $this->request->getPost('hari');
-        $mapel = strtolower(trim($this->request->getPost('mapel'))); 
+        $validation = \Config\Services::validation();
 
-        
+        $rules = [
+            'hari' => [
+                'label' => 'Hari',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} harus dipilih.'
+                ]
+            ],
+            'mapel' => [
+                'label' => 'Mapel',
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => '{field} tidak boleh kosong.',
+                    'min_length' => '{field} minimal 2 karakter.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        $hari = $this->request->getPost('hari');
+        $mapelInput = trim($this->request->getPost('mapel'));
+        $mapelKey = strtolower(trim($this->request->getPost('mapel')));
+
         $existing = $jadwalModel->where([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapel,
-       ])->first();
+            'mapel' => $mapelInput,
+        ])->findAll();
 
-        // Periksa apakah ada mapel yang sama (case-insensitive)
-        if ($existing) {
-            return redirect()->back()->with('error', "Mapel '$mapel' sudah ada pada hari $hari.");
-        }
-            $jadwalModel->save([
+        foreach ($existing as $item) {
+    if (strtolower($item['mapel']) == $mapelKey) {
+        return redirect()->back()->withInput()->with('error', ['mapel' => "Mapel '$mapelInput' sudah ada pada hari $hari."]);
+    }
+}
+
+        $jadwalModel->save([
             'user_id' => $userId,
             'hari' => $hari,
-            'mapel' => $mapel
+            'mapel' => $mapelInput
         ]);
 
-        return redirect()->to('/ortu/jadwal');
+        return redirect()->to('/ortu/jadwal')->with('success', 'Jadwal berhasil ditambahkan.');
     }
+
 
     public function editJadwalHari($hari)
     {
@@ -162,9 +182,56 @@ class Ortu extends BaseController
         return view('ortu/tugas', ['tugas' => $tugas]);
     }
 
+    public function detailTugas($id)
+    {
+        $tugasModel = new \App\Models\TugasModel();
+        $tugas = $tugasModel->find($id);
+
+        if (!$tugas || $tugas['user_id'] != session('user_id')) {
+            return redirect()->to('/ortu/tugas');
+        }
+
+        return view('ortu/detail_tugas', ['tugas' => $tugas]);
+    }
+
+
     public function tambahTugas()
     {
-        $tugasModel = new TugasModel();
+        $validation = \Config\Services::validation();
+
+        // Aturan validasi dan pesan error per field
+        $rules = [
+            'mapel' => [
+                'label' => 'Mapel',
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => '{field} tidak boleh kosong.',
+                    'min_length' => '{field} minimal 2 karakter.'
+                ]
+            ],
+            'deadline' => [
+                'label' => 'Deadline',
+                'rules' => 'required|valid_date',
+                'errors' => [
+                    'required' => '{field} wajib diisi.',
+                    'valid_date' => '{field} tidak valid.'
+                ]
+            ],
+            'keterangan' => [
+                'label' => 'Keterangan',
+                'rules' => 'required|min_length[5]',
+                'errors' => [
+                    'required' => '{field} wajib diisi.',
+                    'min_length' => '{field} minimal 5 karakter.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        $tugasModel = new \App\Models\TugasModel();
 
         $data = [
             'user_id' => session('user_id'),
@@ -176,9 +243,8 @@ class Ortu extends BaseController
 
         $tugasModel->save($data);
 
-        return redirect()->to('/ortu/tugas');
+        return redirect()->to('/ortu/tugas')->with('success', 'Tugas berhasil ditambahkan.');
     }
-
     public function hapusTugas($id)
     {
         $tugasModel = new TugasModel();
@@ -198,7 +264,7 @@ class Ortu extends BaseController
         return view('ortu/edit_tugas', ['tugas' => $tugas]);
     }
 
-    public function updateTugas($id)
+   public function updateTugas($id)
     {
         $tugasModel = new TugasModel();
         
@@ -213,7 +279,7 @@ class Ortu extends BaseController
 
         $tugasModel->update($id, $data);
 
-        return redirect()->to('/ortu/tugas');
+        return redirect()->to('/ortu/tugas')->with('success', 'Tugas berhasil diubah.');
     }
 
     public function profil()
