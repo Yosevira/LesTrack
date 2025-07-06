@@ -83,7 +83,7 @@
                 <?php if ($kehadiran_hari_ini): ?>
                 <div class="display-4 text-success my-2"><i class="fas fa-check-circle"></i></div>
                 <h4 class="status-hadir text-uppercase fw-bold"><?= esc($kehadiran_hari_ini['status']) ?></h4>
-                <p class="text-muted mb-0">Masuk: 07:30 WIB</p>
+                <p class="text-muted mb-0">Tanggal: <?= date('d F Y') ?></p>
                 <?php else: ?>
                 <div class="display-4 text-muted my-2"><i class="fas fa-question-circle"></i></div>
                 <h4 class="text-muted">BELUM ADA DATA</h4>

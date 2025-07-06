@@ -6,6 +6,10 @@
 <div class="alert alert-success"><?= session('success') ?></div>
 <?php endif ?>
 
+<?php if (session()->getFlashdata('error')): ?>
+<div class="alert alert-danger"><?= session('error') ?></div>
+<?php endif ?>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -35,22 +39,48 @@
                 </td>
 
                 <td>
-                    <?php if (!empty($t['file'])): ?>
-                    <a href="/uploads/<?= esc($t['file']) ?>" target="_blank">
-                        <img src="/uploads/<?= esc($t['file']) ?>" alt="Bukti Tugas" width="80" class="img-thumbnail">
-                    </a>
+                    <div class="text-center">
+                        <?php if (!empty($t['file'])): ?>
+                        <a href="/uploads/<?= esc($t['file']) ?>" target="_blank">
+                            <img src="/uploads/<?= esc($t['file']) ?>" alt="Bukti Tugas" width="80"
+                                class="img-thumbnail">
+                        </a>
+                    </div>
                     <?php else: ?>
-                    <input type="file" name="file" class="form-control form-control-sm">
+                    <div class="text-center">
+                        <!-- Gambar default file -->
+                        <img id="preview-<?= $t['id'] ?>" src="/img/foto.png" alt="Preview" class="img-thumbnail mb-1"
+                            style="max-height: 80px;">
+
+                        <!-- Input file -->
+                        <input type="file" name="file" class="form-control form-control-sm mt-1"
+                            onchange="previewImage(event, <?= $t['id'] ?>)">
+                    </div>
                     <?php endif ?>
+
                 </td>
 
                 <td>
-                    <button type="submit" class="btn btn-primary btn-sm">✔ Simpan</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                 </td>
             </form>
         </tr>
         <?php endforeach ?>
     </tbody>
 </table>
+<script>
+function previewImage(event, id) {
+    const input = event.target;
+    const preview = document.getElementById('preview-' + id);
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 
 <?= view('layout/footer') ?>

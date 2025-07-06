@@ -72,42 +72,32 @@ class Guru extends BaseController
             'status' => $this->request->getPost('status')
         ];
 
-        // Validasi & simpan file (hanya gambar)
         $file = $this->request->getFile('file');
+
         if ($file && $file->isValid() && !$file->hasMoved()) {
+            // Validasi tipe file
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-            if (in_array($file->getMimeType(), $allowedTypes)) {
-                $newName = $file->getRandomName();
-                $file->move('uploads/', $newName);
-                $data['file'] = $newName; // pakai 'file', sesuai database
-            } else {
-                return redirect()->back()->with('error', 'File harus berupa gambar (jpg/png/webp)');
+            if (!in_array($file->getMimeType(), $allowedTypes)) {
+                return redirect()->back()->with('error', 'File harus berupa gambar (jpg/jpeg/png/webp)');
             }
 
-                    if ($file && $file->isValid() && !$file->hasMoved()) {
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-                if (!in_array($file->getMimeType(), $allowedTypes)) {
-                    return redirect()->back()->with('error', 'File harus berupa gambar');
-                }
-
-                if ($file->getSize() > 2 * 1024 * 1024) { // 2MB
-                    return redirect()->back()->with('error', 'Ukuran file maksimal 2MB');
-                }
-
-                $newName = $file->getRandomName();
-                $file->move('uploads/', $newName);
-                $data['file'] = $newName;
+            // Validasi ukuran maksimal 2MB
+            if ($file->getSize() > 2 * 1024 * 1024) {
+                return redirect()->back()->with('error', 'Ukuran file maksimal 2MB');
             }
 
+            // Simpan file
+            $newName = $file->getRandomName();
+            $file->move('uploads/', $newName);
+            $data['file'] = $newName;
         }
 
+        // Simpan ke database
         $tugasModel->update($id, $data);
+
         return redirect()->back()->with('success', 'Tugas berhasil diperbarui');
     }
 
-   
-
-    
     public function absensi($year = null, $month = null)
     {
         if (session('role') != 'guru') return redirect()->to('/');

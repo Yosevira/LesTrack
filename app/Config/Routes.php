@@ -53,3 +53,7 @@ $routes->post('/guru/absensi/simpan', 'Guru::simpanAbsensi');
 $routes->get('guru/absensi', 'Guru::absensi');
 $routes->get('guru/absensi/(:num)/(:num)', 'Guru::absensi/$1/$2');
 $routes->post('guru/simpanAbsensiPopup', 'Guru::simpanAbsensiPopup');
+
+//password hash
+$routes->get('/hash', 'Hash::index');
+$routes->post('/hash/generate', 'Hash::generate');
