@@ -10,15 +10,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom Styles -->
+    <link href="<?= base_url('css/style.css') ?>" rel="stylesheet">
     <style>
     body {
         background-color: #f8f9fa;
     }
 
     .navbar-custom {
-        background-color: #0d6efd;
+        background-color: #0D3B66;
     }
 
     .navbar-brand {
@@ -43,6 +42,86 @@
 
     .table-hover tbody tr:hover {
         background-color: #eef6ff;
+    }
+
+    .btn-primary {
+        background-color: #0D3B66 !important;
+        border-color: #0D3B66 !important;
+    }
+
+    .btn-primary:hover {
+        background-color: #092c4c !important;
+        border-color: #092c4c !important;
+    }
+
+    .bg-primary {
+        background-color: #0D3B66 !important;
+    }
+
+    .btn-outline-primary {
+        color: #0D3B66 !important;
+        border-color: #0D3B66 !important;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #0D3B66 !important;
+        color: #fff !important;
+        border-color: #0D3B66 !important;
+    }
+
+    .btn {
+        border-radius: 8px;
+        padding: 5px 12px;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Tombol Ortu - Detail */
+    .btn-detail {
+        background-color: #0D3B66;
+        color: white;
+        border: none;
+    }
+
+    .btn-detail:hover {
+        background-color: #0b3255;
+        color: white;
+    }
+
+    /* Tombol Ortu - Hapus */
+    .btn-hapus {
+        background-color: #ff4d4f;
+        color: white;
+        border: none;
+    }
+
+    .btn-hapus:hover {
+        background-color: #cc3b3d;
+        color: white;
+    }
+
+    /* Tombol Guru - Jadwal */
+    .btn-jadwal {
+        background-color: #0D3B66;
+        color: white;
+        border: none;
+    }
+
+    .btn-jadwal:hover {
+        background-color: #0b3255;
+        color: white;
+    }
+
+    /* Tombol Guru - Tugas */
+    .btn-tugas {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+    }
+
+    .btn-tugas:hover {
+        background-color: #5a6268;
+        color: white;
     }
     </style>
 </head>

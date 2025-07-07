@@ -1,10 +1,11 @@
     </div> <!-- Tutup container -->
 
-    <footer class="bg-white border-top text-center mt-5 py-3 shadow-sm">
-        <small class="text-muted">
-            &copy; <?= date('Y') ?> LesTrack. Dibuat dengan ❤️ untuk pendidikan anak.
+    <footer style="background-color: #0D3B66;" class="border-top text-center mt-5 py-3 shadow-sm">
+        <small style="color: white;">
+            &copy; <?= date('Y') ?> LesTrack. Dibuat dengan ❤️ untuk pantau tugas anak Anda.
         </small>
     </footer>
+
 
     <!-- Validasi Form -->
     <script>

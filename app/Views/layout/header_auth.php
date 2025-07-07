@@ -10,14 +10,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+    <link href="<?= base_url('css/style.css') ?>" rel="stylesheet">
     <style>
     body {
         background-color: #f8f9fa;
     }
 
     .auth-header {
-        background-color: #0d6efd;
+        background-color: #0D3B66;
         padding: 0.5rem 0;
     }
 
@@ -44,6 +44,22 @@
         width: 100%;
         max-width: 400px;
     }
+
+    .btn-primary {
+        background-color: #0D3B66 !important;
+        border-color: #0D3B66 !important;
+    }
+
+    .btn-primary:hover {
+        background-color: #092c4c !important;
+        border-color: #092c4c !important;
+    }
+
+    .bg-primary {
+        background-color: #0D3B66 !important;
+    }
+    </style>
+
     </style>
 </head>
 

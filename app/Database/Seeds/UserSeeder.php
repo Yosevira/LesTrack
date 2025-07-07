@@ -9,8 +9,7 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Factory::create('id_ID'); // untuk nama dan alamat Indonesia
-
+        $faker = Factory::create('id_ID'); 
         for ($i = 0; $i < 15; $i++) {
             $data = [
                 'email'      => $faker->unique()->email,

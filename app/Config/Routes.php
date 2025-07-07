@@ -25,7 +25,6 @@ $routes->get('ortu/jadwal/edit/(:any)', 'Ortu::editJadwalHari/$1'); // 'Senin', 
 $routes->post('ortu/jadwal/update', 'Ortu::updateJadwal');
 $routes->get('ortu/jadwal/delete/(:num)', 'Ortu::hapusMapel/$1');
 
-
 //halaman tugas
 $routes->get('ortu/tugas', 'Ortu::tugas');
 $routes->post('ortu/tugas/add', 'Ortu::tambahTugas');
@@ -34,19 +33,17 @@ $routes->get('ortu/tugas/edit/(:num)', 'Ortu::editTugas/$1');
 $routes->post('ortu/tugas/update/(:num)', 'Ortu::updateTugas/$1');
 $routes->get('/ortu/tugas/detail/(:num)', 'Ortu::detailTugas/$1');
 
-
 $routes->get('ortu/profil', 'Ortu::profil');
 $routes->get('ortu/profil/edit', 'Ortu::editProfil'); // Menampilkan form edit profil
 $routes->post('ortu/profil/update', 'Ortu::updateProfil');
 
-//
-$routes->get('buatpassword', 'Auth::buatPassword');
-
+//guru
 $routes->get('/guru/siswa/(:num)', 'Guru::detailSiswa/$1');
 $routes->get('/guru/tugas/(:num)', 'Guru::tugas/$1'); // lihat tugas siswa
 $routes->post('/guru/tugas/update', 'Guru::updateTugas'); // update status + bukti
 $routes->get('/guru/siswa/(:num)', 'Guru::detailSiswa/$1');  // untuk jadwal
 $routes->get('/guru/tugas/(:num)', 'Guru::tugas/$1');        // untuk tugas
+$routes->get('guru/tugas', 'Guru::tugas');
 
 $routes->get('/guru/absensi', 'Guru::absensi');
 $routes->post('/guru/absensi/simpan', 'Guru::simpanAbsensi');
@@ -57,3 +54,4 @@ $routes->post('guru/simpanAbsensiPopup', 'Guru::simpanAbsensiPopup');
 //password hash
 $routes->get('/hash', 'Hash::index');
 $routes->post('/hash/generate', 'Hash::generate');
+$routes->get('buatpassword', 'Auth::buatPassword');

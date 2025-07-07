@@ -82,7 +82,7 @@
 
         </div>
 
-        <button type="submit" class="btn btn-success">Register</button>
+        <button type="submit" class="btn btn-primary w-10">Register</button>
         <p class="mt-3">
             Sudah punya akun? <a href="/login">Login di sini</a>
         </p>

@@ -8,7 +8,7 @@ modal.show();
 
 <!-- Header & Tombol Tambah -->
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Daftar Tugas Anak</h4>
+    <h3 class="mb-0">Daftar Tugas Anak</h3>
     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahTugas">
         ➕ Tambah Tugas
     </button>
