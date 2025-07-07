@@ -11,18 +11,35 @@ class Guru extends BaseController
 {
     public function dashboard()
     {
-        
         if (session('role') != 'guru') {
             return redirect()->to('/');
         }
 
         $userModel = new UserModel();
-        $siswa = $userModel->where('role', 'ortu')->findAll();
+        $search = $this->request->getGet('search'); // Mengambil query pencarian dari URL
 
-        return view('guru/dashboard', ['siswa' => $siswa]);
+        // Memulai query dengan filter role
+        $userModel->where('role', 'ortu');
+
+        // Jika ada query pencarian, tambahkan kondisi 'like'
+        if ($search) {
+            $userModel->groupStart() // Mengelompokkan kondisi OR
+                      ->like('nama_anak', $search)
+                      ->orLike('nama_ortu', $search)
+                      ->orLike('kelas', $search)
+                      ->groupEnd();
+        }
+
+        $siswa = $userModel->findAll();
+
+        // Mengirim data siswa dan query pencarian ke view
+        return view('guru/dashboard', [
+            'siswa' => $siswa,
+            'search' => $search
+        ]);
     }
 
-    
+
     public function detailSiswa($id)
     {
         if (session('role') != 'guru') return redirect()->to('/');
@@ -102,7 +119,7 @@ class Guru extends BaseController
     {
         if (session('role') != 'guru') return redirect()->to('/');
 
-        
+
         $year  = $year ?? date('Y');
         $month = $month ?? date('m');
 
@@ -119,10 +136,10 @@ class Guru extends BaseController
             ->findAll();
 
         // 3. Olah data absensi agar mudah ditampilkan di view
-        
+
         $absensi_terolah = [];
         foreach ($absensi_bulanan as $absen) {
-            $day = date('j', strtotime($absen['tanggal'])); 
+            $day = date('j', strtotime($absen['tanggal']));
             $absensi_terolah[$absen['user_id']][$day] = $absen['status'];
         }
 
@@ -132,15 +149,15 @@ class Guru extends BaseController
             'absensi' => $absensi_terolah,
             'year' => $year,
             'month' => $month,
-            'nama_bulan' => date('F', mktime(0, 0, 0, $month, 1, $year)), 
-            'days_in_month' => cal_days_in_month(CAL_GREGORIAN, $month, $year) 
+            'nama_bulan' => date('F', mktime(0, 0, 0, $month, 1, $year)),
+            'days_in_month' => cal_days_in_month(CAL_GREGORIAN, $month, $year)
         ];
 
         // 5. Hitung data untuk "Ringkasan Hari Ini"
         $today = date('Y-m-d');
         $data['hadir_hari_ini'] = $absensiModel->where('tanggal', $today)->where('status', 'hadir')->countAllResults();
         $data['sakit_hari_ini'] = $absensiModel->where('tanggal', $today)->where('status', 'sakit')->countAllResults();
-        
+
         $data['alpa_hari_ini'] = $absensiModel->where('tanggal', $today)->whereIn('status', ['alpa', 'izin'])->countAllResults();
         $data['total_murid'] = count($siswa);
 
@@ -153,7 +170,7 @@ class Guru extends BaseController
             ->countAllResults();
         $data['total_pertemuan'] = $total_pertemuan_data;
 
-        
+
         return view('guru/absensi', $data);
     }
     public function simpanAbsensi()
@@ -171,7 +188,6 @@ class Guru extends BaseController
 
         return redirect()->back()->with('success', 'Absensi berhasil disimpan');
     }
-    
 
 
 
@@ -180,51 +196,50 @@ class Guru extends BaseController
         if (session('role') != 'guru') return redirect()->to('/');
 
         $absensiModel = new \App\Models\AbsensiModel();
-        
+
         $userId = $this->request->getPost('user_id');
         $tanggal = $this->request->getPost('tanggal');
         $status = $this->request->getPost('status');
 
-       
+
         $year = date('Y', strtotime($tanggal));
         $month = date('m', strtotime($tanggal));
 
-        
+
         if (empty($userId) || empty($tanggal) || empty($status)) {
             return redirect()->to('guru/absensi/' . $year . '/' . $month)
                              ->with('error', 'Data yang dikirim tidak lengkap.');
         }
 
-        
+
         $existing = $absensiModel->where('user_id', $userId)
                                  ->where('tanggal', $tanggal)
                                  ->first();
 
         if ($status == 'kosong') {
-            
+
             if ($existing) {
                 $absensiModel->delete($existing['id']);
             }
         } else {
-            
+
             $data = [
                 'user_id' => $userId,
                 'tanggal' => $tanggal,
                 'status'  => $status,
             ];
 
-            
+
             if ($existing) {
                 $data['id'] = $existing['id'];
             }
-            
+
             $absensiModel->save($data);
         }
 
-       
+
         return redirect()->to('guru/absensi/' . $year . '/' . $month)
                          ->with('success', 'Absensi berhasil diperbarui.');
     }
-    
 
 }
