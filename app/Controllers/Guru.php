@@ -52,9 +52,11 @@ class Guru extends BaseController
         $tugas = $tugasModel->where('user_id', $id)->findAll();
         $siswa = $userModel->find($id);
 
-        $tugasMapel = [];
+         $tugasMapel = [];
         foreach ($tugas as $t) {
-            $tugasMapel[strtolower($t['mapel'])] = true;
+            if ($t['status'] !== 'selesai') {
+                $tugasMapel[strtolower($t['mapel'])] = true;
+            }
         }
 
         return view('guru/jadwal_siswa', [

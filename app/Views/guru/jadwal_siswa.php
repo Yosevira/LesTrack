@@ -26,6 +26,7 @@
                             <?php if (isset($tugasMapel[$mapelKey])): ?>
                             <a href="<?= site_url('guru/tugas/' . $siswa['id']) ?>" class=" badge bg-warning text-dark
                                 text-decoration-none">Tugas</a>
+
                             <?php endif ?>
                         </div>
                     </li>

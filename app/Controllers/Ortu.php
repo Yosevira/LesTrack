@@ -157,9 +157,11 @@ class Ortu extends BaseController
     {
         $jadwalModel = new JadwalModel();
         $id = $this->request->getPost('id');
-        $mapel = strtolower(trim($this->request->getPost('mapel')));
+        $mapelInput = trim($this->request->getPost('mapel'));
+        $mapelKey = strtolower(trim($this->request->getPost('mapel')));
 
-        $jadwalModel->update($id, ['mapel' => $mapel]);
+
+        $jadwalModel->update($id, ['mapel' => $mapelInput]);
 
         return redirect()->to('/ortu/jadwal');
     }
