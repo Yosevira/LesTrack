@@ -1,10 +1,6 @@
 <?= view('layout/header') ?>
 <h3>Jadwal Harian Anak</h3>
 
-<?php if(session('error')): ?>
-<div class="alert alert-danger"><?= session('error') ?></div>
-<?php endif ?>
-
 <!-- Tombol Tambah -->
 <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
     ➕ Tambah Jadwal

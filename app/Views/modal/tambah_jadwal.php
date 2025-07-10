@@ -19,7 +19,7 @@ $hariList = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
                         <option value="">Pilih Hari</option>
                         <?php foreach ($hariList as $h): ?>
                         <option value="<?= $h ?>" <?= old('hari') == $h ? 'selected' : '' ?>><?= $h ?></option>
-                        <?php endforeach; ?>
+                        <?php endforeach ?>
                     </select>
                     <?php if(session('errors.hari')): ?>
                     <div class="invalid-feedback">
@@ -48,3 +48,10 @@ $hariList = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
         </form>
     </div>
 </div>
+
+<?php if(session('errors')): ?>
+<script>
+const modal = new bootstrap.Modal(document.getElementById('modalTambahJadwal'));
+modal.show();
+</script>
+<?php endif ?>

@@ -60,8 +60,6 @@ class Ortu extends BaseController
         return view('ortu/dashboard', $data);
     }
 
-    
-
 
     public function jadwal()
     {
@@ -186,7 +184,7 @@ class Ortu extends BaseController
 
     public function detailTugas($id)
     {
-        $tugasModel = new \App\Models\TugasModel();
+        $tugasModel = new TugasModel();
         $tugas = $tugasModel->find($id);
 
         if (!$tugas || $tugas['user_id'] != session('user_id')) {
@@ -233,7 +231,7 @@ class Ortu extends BaseController
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
-        $tugasModel = new \App\Models\TugasModel();
+        $tugasModel = new TugasModel();
 
         $data = [
             'user_id' => session('user_id'),

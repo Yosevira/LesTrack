@@ -6,10 +6,6 @@
 <div class="alert alert-success"><?= session('success') ?></div>
 <?php endif ?>
 
-<?php if (session()->getFlashdata('error')): ?>
-<div class="alert alert-danger"><?= session('error') ?></div>
-<?php endif ?>
-
 <div class="card border">
     <div class="card-body">
         <div class="table-responsive"></div>
